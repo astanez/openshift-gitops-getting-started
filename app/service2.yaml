@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: spring-petclinic-2
+  name: spring-petclinic-2
+spec:
+  ports:
+  - name: 8081-tcp
+    port: 8081
+    protocol: TCP
+    targetPort: 8081
+  - name: 8444-tcp
+    port: 8444
+    protocol: TCP
+    targetPort: 8444
+  - name: 8779-tcp
+    port: 8779
+    protocol: TCP
+    targetPort: 8779
+  selector:
+    app: spring-petclinic-2
+  sessionAffinity: None
+  type: ClusterIP
