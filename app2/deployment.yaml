@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app: spring-petclinic-2
+    app.kubernetes.io/component: web-2
+    app.kubernetes.io/instance: spring-petclinic-2
+    app.kubernetes.io/name: spring-petclinic-2
+    app.kubernetes.io/part-of: spring-petclinic-2
+    app.openshift.io/runtime: java
+  name: spring-petclinic-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-petclinic-2
+  template:
+    metadata:
+      labels:
+        app: spring-petclinic-2
+    spec:
+      containers:
+      - name: spring-petclinic-2
+        imagePullPolicy: Always
+        image: quay.io/siamaksade/spring-petclinic:latest
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8081
+            scheme: HTTP
+          initialDelaySeconds: 45
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        ports:
+        - containerPort: 8081
+          protocol: TCP
+        - containerPort: 8444
+          protocol: TCP
+        - containerPort: 8779
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8081
+            scheme: HTTP
+          initialDelaySeconds: 45
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
